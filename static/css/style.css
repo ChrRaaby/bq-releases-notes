@@ -35,6 +35,12 @@
     --color-general: #6b7280;
     --color-general-bg: rgba(107, 114, 128, 0.15);
     
+    --text-body: #e5e7eb;
+    --bg-code-inline: rgba(255, 255, 255, 0.08);
+    --bg-code-block: #0b0f17;
+    --scrollbar-thumb: rgba(255, 255, 255, 0.1);
+    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.2);
+    
     /* Layout */
     --radius-sm: 8px;
     --radius-md: 12px;
@@ -71,6 +77,12 @@ body.light-theme {
     --color-deprecation-bg: rgba(225, 29, 72, 0.1);
     --color-general: #4b5563;
     --color-general-bg: rgba(75, 85, 99, 0.1);
+    
+    --text-body: #334155;
+    --bg-code-inline: rgba(15, 23, 42, 0.06);
+    --bg-code-block: #f1f5f9;
+    --scrollbar-thumb: rgba(15, 23, 42, 0.15);
+    --scrollbar-thumb-hover: rgba(15, 23, 42, 0.3);
 }
 
 /* Softer background glows in light theme */
@@ -142,13 +154,13 @@ body::after {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--scrollbar-thumb);
     border-radius: var(--radius-full);
     border: 2px solid var(--bg-primary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--scrollbar-thumb-hover);
 }
 
 /* Layout App Container */
@@ -583,7 +595,7 @@ body::after {
 
 .note-body {
     font-size: 15px;
-    color: #e5e7eb;
+    color: var(--text-body);
 }
 
 .note-body p {
@@ -609,7 +621,7 @@ body::after {
 .note-body code {
     font-family: var(--font-mono);
     font-size: 13px;
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--bg-code-inline);
     padding: 2px 6px;
     border-radius: 4px;
     color: var(--accent-purple);
@@ -618,7 +630,7 @@ body::after {
 .note-body pre {
     font-family: var(--font-mono);
     font-size: 13px;
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-code-block);
     padding: 16px;
     border-radius: var(--radius-sm);
     overflow-x: auto;
