@@ -21,6 +21,7 @@ const elements = {
     typePillsContainer: document.getElementById('type-pills-container'),
     sortSelect: document.getElementById('sort-select'),
     resetFiltersBtn: document.getElementById('reset-filters-btn'),
+    exportCsvBtn: document.getElementById('export-csv-btn'),
     
     // Stats elements
     statAll: document.getElementById('stat-all').querySelector('.stat-num'),
@@ -76,6 +77,9 @@ function setupEventListeners() {
 
     // Reset filters
     elements.resetFiltersBtn.addEventListener('click', resetFilters);
+
+    // Export CSV action
+    elements.exportCsvBtn.addEventListener('click', exportToCSV);
 
     // Modal Events
     elements.closeModalBtn.addEventListener('click', closeComposerModal);
@@ -424,4 +428,61 @@ function executeTweet() {
     const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
     window.open(shareUrl, '_blank');
     closeComposerModal();
+}
+
+// Export Filtered Release Notes to CSV
+function exportToCSV() {
+    let filtered = state.updates.filter(update => {
+        const matchCategory = state.activeFilter === 'all' || update.type.toLowerCase() === state.activeFilter;
+        const textToSearch = `${update.date} ${update.type} ${update.content}`.toLowerCase();
+        const matchSearch = state.searchQuery === '' || textToSearch.includes(state.searchQuery);
+        return matchCategory && matchSearch;
+    });
+    
+    filtered.sort((a, b) => {
+        const dateA = new Date(a.short_date);
+        const dateB = new Date(b.short_date);
+        return state.sortBy === 'newest' ? dateB - dateA : dateA - dateB;
+    });
+
+    if (filtered.length === 0) {
+        alert("No release notes to export.");
+        return;
+    }
+
+    const headers = ["Date", "Type", "Content", "Link"];
+    const csvRows = [headers.map(h => `"${h}"`).join(",")];
+
+    filtered.forEach(update => {
+        const rawContent = getRawTextFromHtml(update.content).trim();
+        
+        const escapeCsvField = (text) => {
+            if (!text) return '""';
+            return `"${text.replace(/"/g, '""')}"`;
+        };
+
+        const row = [
+            escapeCsvField(update.date),
+            escapeCsvField(update.type),
+            escapeCsvField(rawContent),
+            escapeCsvField(update.link)
+        ];
+        csvRows.push(row.join(","));
+    });
+
+    const csvContent = "\ufeff" + csvRows.join("\n");
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    
+    const categorySuffix = state.activeFilter !== 'all' ? `_${state.activeFilter}` : '';
+    const searchSuffix = state.searchQuery ? `_filtered` : '';
+    link.setAttribute("download", `bigquery_release_notes${categorySuffix}${searchSuffix}.csv`);
+    
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }

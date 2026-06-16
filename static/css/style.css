@@ -254,6 +254,13 @@ body::after {
     box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
 }
 
+.btn-success {
+    background-color: var(--color-feature-bg) !important;
+    color: var(--color-feature) !important;
+    border-color: var(--color-feature) !important;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.2) !important;
+}
+
 .icon {
     width: 18px;
     height: 18px;
@@ -411,6 +418,12 @@ body::after {
     background-color: rgba(56, 189, 248, 0.1);
     color: var(--accent-blue);
     border-color: var(--accent-blue);
+}
+
+.filter-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .sort-box {
@@ -889,9 +902,17 @@ dialog[open]::backdrop {
         align-items: flex-start;
     }
     
-    .sort-box {
+    .filter-controls-right {
         width: 100%;
+        display: flex;
         justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .sort-box {
+        justify-content: flex-start;
+        gap: 8px;
     }
     
     .type-filters {
