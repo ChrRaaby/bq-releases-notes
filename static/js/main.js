@@ -22,6 +22,7 @@ const elements = {
     sortSelect: document.getElementById('sort-select'),
     resetFiltersBtn: document.getElementById('reset-filters-btn'),
     exportCsvBtn: document.getElementById('export-csv-btn'),
+    themeToggleBtn: document.getElementById('theme-toggle-btn'),
     
     // Stats elements
     statAll: document.getElementById('stat-all').querySelector('.stat-num'),
@@ -42,6 +43,7 @@ const elements = {
 
 // Init Application
 document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     fetchReleaseNotes();
     setupEventListeners();
     setupDialogFallback();
@@ -80,6 +82,9 @@ function setupEventListeners() {
 
     // Export CSV action
     elements.exportCsvBtn.addEventListener('click', exportToCSV);
+
+    // Theme toggle action
+    elements.themeToggleBtn.addEventListener('click', toggleTheme);
 
     // Modal Events
     elements.closeModalBtn.addEventListener('click', closeComposerModal);
@@ -485,4 +490,28 @@ function exportToCSV() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+}
+
+// Theme Management
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') {
+        document.body.classList.remove('dark-theme');
+        document.body.classList.add('light-theme');
+    } else {
+        document.body.classList.remove('light-theme');
+        document.body.classList.add('dark-theme');
+    }
+}
+
+function toggleTheme() {
+    if (document.body.classList.contains('light-theme')) {
+        document.body.classList.remove('light-theme');
+        document.body.classList.add('dark-theme');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.body.classList.remove('dark-theme');
+        document.body.classList.add('light-theme');
+        localStorage.setItem('theme', 'light');
+    }
 }

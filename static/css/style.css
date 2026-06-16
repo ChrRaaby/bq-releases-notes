@@ -45,6 +45,45 @@
     --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Light Theme Variable Overrides */
+body.light-theme {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-card: rgba(255, 255, 255, 0.85);
+    --bg-card-hover: rgba(255, 255, 255, 0.98);
+    --border-color: rgba(15, 23, 42, 0.08);
+    --border-hover: rgba(56, 189, 248, 0.5);
+    
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    
+    --accent-blue: #0284c7;
+    --accent-purple: #7c3aed;
+    
+    --color-feature: #059669;
+    --color-feature-bg: rgba(5, 150, 105, 0.1);
+    --color-fix: #2563eb;
+    --color-fix-bg: rgba(37, 99, 235, 0.1);
+    --color-issue: #d97706;
+    --color-issue-bg: rgba(217, 119, 6, 0.1);
+    --color-deprecation: #e11d48;
+    --color-deprecation-bg: rgba(225, 29, 72, 0.1);
+    --color-general: #4b5563;
+    --color-general-bg: rgba(75, 85, 99, 0.1);
+}
+
+/* Softer background glows in light theme */
+body.light-theme::before, body.light-theme::after {
+    opacity: 0.05;
+}
+
+/* Theme Toggle Icon Show/Hide */
+body.light-theme .theme-icon-moon { display: none; }
+body.light-theme .theme-icon-sun { display: block; }
+body:not(.light-theme) .theme-icon-moon { display: block; }
+body:not(.light-theme) .theme-icon-sun { display: none; }
+
 /* Global Reset & Base */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -803,6 +842,20 @@ dialog[open]::backdrop {
     white-space: pre-wrap;
     word-break: break-word;
     line-height: 1.4;
+}
+
+/* Light Theme Tweet Composer Preview Card Overrides */
+body.light-theme .tweet-preview-card {
+    background-color: #f7f9f9;
+    border-color: rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme .tweet-display-name {
+    color: #0f1419;
+}
+
+body.light-theme .tweet-text-preview {
+    color: #0f1419;
 }
 
 .tweet-text-preview a {
