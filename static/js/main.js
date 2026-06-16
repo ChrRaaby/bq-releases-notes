@@ -304,7 +304,7 @@ function render() {
             </div>
             
             <div class="note-body">
-                ${update.content}
+                ${highlightSearchText(update.content, state.searchQuery)}
             </div>
             
             <div class="note-footer">
@@ -350,6 +350,20 @@ function getRawTextFromHtml(html) {
     });
     
     return tempDiv.textContent || tempDiv.innerText || '';
+}
+
+// Safely highlight search query occurrences in HTML text nodes
+function highlightSearchText(html, query) {
+    if (!query) return html;
+    const escapedQuery = query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const regex = new RegExp(`(<[^>]+>)|(${escapedQuery})`, 'gi');
+    
+    return html.replace(regex, (match, tag, text) => {
+        if (tag) {
+            return tag;
+        }
+        return `<mark class="search-highlight">${text}</mark>`;
+    });
 }
 
 // Clipboard copying utility

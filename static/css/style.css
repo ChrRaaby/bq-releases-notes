@@ -118,6 +118,10 @@ body {
     flex-direction: column;
 }
 
+body, .app-header, .stat-card, .filter-panel, .note-card, #search-input, #sort-select, .pill, button, dialog {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
 /* Glow Background Effects */
 body::before, body::after {
     content: '';
@@ -987,4 +991,17 @@ body.light-theme .tweet-text-preview {
     .type-filters {
         width: 100%;
     }
+}
+
+/* Search Highlights */
+.search-highlight {
+    background-color: rgba(56, 189, 248, 0.25);
+    color: inherit;
+    padding: 0 2px;
+    border-radius: 2px;
+    font-weight: 500;
+}
+
+body.light-theme .search-highlight {
+    background-color: rgba(2, 132, 199, 0.2);
 }
