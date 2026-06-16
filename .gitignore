@@ -1,0 +1,18 @@
+# Python virtual environments
+.venv/
+env/
+venv/
+ENV/
+
+# Python caching
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Application data cache
+release_notes_cache.xml
+
+# System files
+.DS_Store
+Thumbs.db
